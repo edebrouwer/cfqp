@@ -1,11 +1,42 @@
-# mm-long
-building temporal models of longitudinal biomarkers in myeloma
+# Deep Counterfactuals Estimation with Categorical Background Variables
 
+## Requirements
+
+We use poetry as a package manager, which should take care of all dependencies.  You can install poetry [here](https://python-poetry.org/) 
+
+The only requirement is `python>=3.9` and `python<3.11`.
 
 ## Installation
 
-`poetry install`
+Simply run `poetry install`
 
-You will also need to do link ml_mmrf to the /data directory.
+## Data Generation
 
-`ln -s ml_mmrf data/`
+The data will be generated automatically when running the models.
+
+## Running Experiments
+
+`cd condgen/counterfactuals`
+
+### Image Data Set
+
+`poetry run python train_cf_cluster.py --EM=true --data_type=MNIST --max_epochs1=50 --max_epochs2=50 --noise_std=0.05 -non_additive_noise=True -num_classes_model=-1 --update_period=10`
+
+
+### Harmonic Oscillator Data Set
+
+`poetry run python train_cf_cluster.py --EM=true --data_type=SimpleTraj --max_epochs1=50 --max_epochs2=50 --noise_std=0.05 -non_additive_noise=True -num_classes_model=-1 --update_period=10`
+
+### Harmonic Oscillator Data Set
+
+`poetry run python train_cf_cluster.py --EM=true --data_type=CV --max_epochs1=50 --max_epochs2=50 --noise_std=0.05 -non_additive_noise=True -num_classes_model=-1 --update_period=10`
+
+## Processing Results
+
+The `CF_eval.ipynb` notebook is used to process the results of the counterfactual reconstructions experiments.
+
+`MNIST_comparison.ipynb` produces the image comparison figure.
+
+
+
+
