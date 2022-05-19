@@ -1,5 +1,7 @@
 # Deep Counterfactuals Estimation with Categorical Background Variables
 
+<img src="https://github.com/edebrouwer/cfqp/blob/bee4be911f21c80b66d2324e180478d703a3b7b4/condgen/notebooks/figs/DAG.png" width="500">
+
 ## Requirements
 
 We use poetry as a package manager, which should take care of all dependencies.  You can install poetry [here](https://python-poetry.org/) 
