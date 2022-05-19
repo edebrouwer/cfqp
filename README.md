@@ -1,4 +1,4 @@
-# Deep Counterfactuals Estimation with Categorical Background Variables
+# Deep Counterfactual Estimation with Categorical Background Variables
 
 <img src=https://i.imgur.com/1ic5Ezk.png | width="500">
 
