@@ -44,7 +44,7 @@ def main(model_cls, data_cls, args):
     trainer.fit(model, datamodule=dataset)
 
     checkpoint_path = checkpoint_cb.best_model_path
-    #trainer2 = pl.Trainer(logger=False, gpus = args.gpus)
+    # trainer2 = pl.Trainer(logger=False, gpus = args.gpus)
 
     model = model_cls.load_from_checkpoint(
         checkpoint_path)
@@ -73,6 +73,7 @@ def main(model_cls, data_cls, args):
     if args.continuous_relaxation:
         X_flat = noise_pred.reshape(imgs_pred.shape[0], 1)
     else:
+
         X_flat = (imgs_pred-imgs_true).reshape(imgs_pred.shape[0], -1)
 
     if args.cluster_algo == "kmeans":
@@ -89,7 +90,7 @@ def main(model_cls, data_cls, args):
                 entropy_max = entropy
 
             confusion_mat = confusion_matrix(color, kmeans.labels_)
-        #import ipdb; ipdb.set_trace()
+        # import ipdb; ipdb.set_trace()
     else:
         from sklearn.mixture import GaussianMixture
         entropy_max = 0
@@ -105,15 +106,13 @@ def main(model_cls, data_cls, args):
             if entropy >= entropy_max:
                 kmeans_max = gmm
                 entropy_max = entropy
+
     if args.continuous_relaxation:
         args.num_classes_model = num_classes_model_og
         model = model_cls(**vars(args))
-        # TODO : how to give the kmeans ....
     else:
         model.reset_generator(
             num_classes_model=num_classes_model_og, num_classes=args.num_classes)
-    # args.num_classes_model = num_classes_model_og #reset to original num_classes_model
-    #model_2 = model_cls(**vars(args), model_prev = model)
 
     model.set_kmeans(kmeans_max)
 
@@ -164,10 +163,6 @@ if __name__ == "__main__":
 
     parser = ArgumentParser()
 
-    # figure out which model to use and other basic params
-    #parser.add_argument('--use_mask_train', type=strtobool, default=False, help='wether to use all patients in the training or only the ones who progress after T_mask')
-    #parser.add_argument('--T_cond', default=0, type=int, help='T_condition')
-    #parser.add_argument('--T_mask', default=-1, type=int, help='T_mask')
     parser.add_argument('--fold', default=0, type=int,
                         help=' fold number to use')
     parser.add_argument('--gpus', default=1, type=int,
@@ -188,27 +183,15 @@ if __name__ == "__main__":
     partial_args, _ = parser.parse_known_args()
 
     model_cls = CFGAN
-    # if partial_args.model_type == "RNN":
-    #    model_cls = RNN_seq2seq
-    # elif partial_args.model_type == "NeuralODE":
-    #    model_cls = NeuralODE
-    # elif partial_args.model_type == "Transformer":
-    #    model_cls = Transformer
-
     if partial_args.data_type == "MNIST":
         data_cls = MNISTDataModule
     elif partial_args.data_type == "SimpleTraj":
         data_cls = SimpleTrajDataModule
     elif partial_args.data_type == "CV":
         data_cls = SimpleTrajDataModule
-    # elif partial_args.data_type == "CV":
-    #    data_cls = CVDataModule
 
     parser = model_cls.add_model_specific_args(parser)
     parser = data_cls.add_dataset_specific_args(parser)
     args = parser.parse_args()
-
-    # if args.T_mask == -1:
-    #    args.T_mask = args.T_cond
 
     main(model_cls, data_cls, args)

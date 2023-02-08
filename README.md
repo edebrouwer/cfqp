@@ -1,6 +1,6 @@
-# Deep Counterfactuals Estimation with Categorical Background Variables
+# Deep Counterfactual Estimation with Categorical Background Variables
 
-<img src="https://github.com/edebrouwer/cfqp/blob/bee4be911f21c80b66d2324e180478d703a3b7b4/condgen/notebooks/figs/DAG.png" width="500">
+<img src=https://i.imgur.com/1ic5Ezk.png width="500">
 
 ## Requirements
 
@@ -38,7 +38,6 @@ The data will be generated automatically when running the models.
 The `CF_eval.ipynb` notebook is used to process the results of the counterfactual reconstructions experiments.
 
 `MNIST_comparison.ipynb` produces the image comparison figure.
-
 
 
 
